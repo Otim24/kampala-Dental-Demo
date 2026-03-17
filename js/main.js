@@ -80,14 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sticky Header Logic
     const header = document.getElementById('site-header');
+    const themeToggleBtnFade = document.getElementById('theme-toggle'); // renamed variable to avoid conflict with dark mode logic
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             header.classList.add('scrolled', 'py-3');
             header.classList.remove('py-6');
+            if (themeToggleBtnFade) {
+                themeToggleBtnFade.classList.add('opacity-0', 'pointer-events-none');
+                themeToggleBtnFade.classList.remove('opacity-100', 'pointer-events-auto');
+            }
         } else {
             header.classList.remove('scrolled', 'py-3');
             header.classList.add('py-6');
+            if (themeToggleBtnFade) {
+                themeToggleBtnFade.classList.remove('opacity-0', 'pointer-events-none');
+                themeToggleBtnFade.classList.add('opacity-100', 'pointer-events-auto');
+            }
         }
     });
 
