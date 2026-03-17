@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sticky Header Logic
     const header = document.getElementById('site-header');
     const themeToggleBtnFade = document.getElementById('theme-toggle'); // renamed variable to avoid conflict with dark mode logic
+    const mobileThemeToggleBtnFade = document.getElementById('mobile-theme-toggle');
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -90,12 +91,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 themeToggleBtnFade.classList.add('opacity-0', 'pointer-events-none');
                 themeToggleBtnFade.classList.remove('opacity-100', 'pointer-events-auto');
             }
+            if (mobileThemeToggleBtnFade) {
+                mobileThemeToggleBtnFade.classList.add('opacity-0', 'pointer-events-none');
+                mobileThemeToggleBtnFade.classList.remove('opacity-100', 'pointer-events-auto');
+            }
         } else {
             header.classList.remove('scrolled', 'py-3');
             header.classList.add('py-6');
             if (themeToggleBtnFade) {
                 themeToggleBtnFade.classList.remove('opacity-0', 'pointer-events-none');
                 themeToggleBtnFade.classList.add('opacity-100', 'pointer-events-auto');
+            }
+            if (mobileThemeToggleBtnFade) {
+                mobileThemeToggleBtnFade.classList.remove('opacity-0', 'pointer-events-none');
+                mobileThemeToggleBtnFade.classList.add('opacity-100', 'pointer-events-auto');
             }
         }
     });
@@ -143,50 +152,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Dark Mode Logic ---
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtns = [
+        {
+            btn: document.getElementById('theme-toggle'),
+            darkIcon: document.getElementById('theme-toggle-dark-icon'),
+            lightIcon: document.getElementById('theme-toggle-light-icon')
+        },
+        {
+            btn: document.getElementById('mobile-theme-toggle'),
+            darkIcon: document.getElementById('mobile-theme-toggle-dark-icon'),
+            lightIcon: document.getElementById('mobile-theme-toggle-light-icon')
+        }
+    ];
 
-    if (themeToggleBtn) {
-        // Change the icons inside the button based on previous settings
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            themeToggleLightIcon.classList.remove('opacity-0', '-rotate-90');
-            themeToggleDarkIcon.classList.add('opacity-0', 'rotate-90');
-            document.documentElement.classList.add('dark');
+    // Check system preference once on load
+    const isDarkModePreferred = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+    if (isDarkModePreferred) {
+        document.documentElement.classList.add('dark');
+    }
+
+    // Initialize all logic for both desktop and mobile theme toggles
+    themeToggleBtns.forEach(({ btn, darkIcon, lightIcon }) => {
+        if (!btn || !darkIcon || !lightIcon) return;
+
+        // Set initial icon states
+        if (isDarkModePreferred) {
+            lightIcon.classList.remove('opacity-0', '-rotate-90');
+            darkIcon.classList.add('opacity-0', 'rotate-90');
         } else {
-            themeToggleDarkIcon.classList.remove('opacity-0', 'rotate-90');
-            themeToggleLightIcon.classList.add('opacity-0', '-rotate-90');
-            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('opacity-0', 'rotate-90');
+            lightIcon.classList.add('opacity-0', '-rotate-90');
         }
 
-        themeToggleBtn.addEventListener('click', function() {
-            // toggle icons inside button for crossfade
-            themeToggleDarkIcon.classList.toggle('opacity-0');
-            themeToggleDarkIcon.classList.toggle('rotate-90');
-            themeToggleLightIcon.classList.toggle('opacity-0');
-            themeToggleLightIcon.classList.toggle('-rotate-90');
-
-            // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-            // if NOT set via local storage previously
+        btn.addEventListener('click', function() {
+            // Apply DOM class change and save state
+            const isCurrentlyDark = document.documentElement.classList.contains('dark');
+            if (isCurrentlyDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
             } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
             }
+
+            // Update icons for ALL toggle buttons visually
+            themeToggleBtns.forEach((toggleGrp) => {
+                if (!toggleGrp.btn) return;
+                toggleGrp.darkIcon.classList.toggle('opacity-0');
+                toggleGrp.darkIcon.classList.toggle('rotate-90');
+                toggleGrp.lightIcon.classList.toggle('opacity-0');
+                toggleGrp.lightIcon.classList.toggle('-rotate-90');
+            });
         });
-    }
+    });
 
     // --- Live Time Pill Logic ---
     const liveTimePill = document.getElementById('live-time-pill');
