@@ -174,4 +174,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- Live Time Pill Logic ---
+    const liveTimePill = document.getElementById('live-time-pill');
+    if (liveTimePill) {
+        const updateTime = () => {
+            const now = new Date();
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = days[now.getDay()];
+            
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            
+            const timeString = `Today ${dayName}, ${hours}:${minutes} ${ampm}`;
+            liveTimePill.textContent = timeString;
+        };
+        
+        // Initial call
+        updateTime();
+        
+        // Update every 60 seconds
+        setInterval(updateTime, 60000);
+    }
 });
