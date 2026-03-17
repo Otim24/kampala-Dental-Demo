@@ -1,0 +1,55 @@
+/* Custom CSS file for additional styles not covered by Tailwind utility classes */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sticky Header Scrolled State */
+#site-header.scrolled #site-logo {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+}
+
+#site-header.scrolled #desktop-nav {
+    background-color: rgba(255, 255, 255, 0.5); /* Highly transparent white */
+    backdrop-filter: blur(16px); /* Strong glass blur */
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Soft shadow */
+}
+
+#site-header.scrolled .nav-link {
+    color: #4b5563; /* gray-600 */
+}
+
+#site-header.scrolled .nav-link:hover {
+    color: #111827; /* gray-900 */
+}
+
+#site-header.scrolled #call-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+}
+
+#site-header.scrolled #mobile-menu-btn {
+    color: #111827;
+}
+
+#site-header.scrolled #mobile-menu-btn:hover {
+    background-color: rgba(17, 24, 39, 0.05);
+}
+
+/* Custom Text Shadow Utility */
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Clinic</title>
+    <!-- Tailwind CSS (via CDN for simplicity) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9', /* Default sky blue, will update based on your design */
+                        secondary: '#0f172a',
+                    },
+                    keyframes: {
+                        subtleBounce: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    },
+                    animation: {
+                        'subtle-bounce': 'subtleBounce 4s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-[#FCFBF8] text-gray-900 dark:bg-neutral-900 dark:text-neutral-100 font-sans antialiased overflow-x-hidden selection:bg-black selection:text-white transition-colors duration-500">
+
+    <!-- Header -->
+    <header id="site-header" class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center left-0 right-0 max-w-[1400px] mx-auto transition-all duration-300">
+        <div id="site-logo" class="text-white text-2xl font-bold tracking-tight z-50 ml-2 md:ml-8 relative transition-colors duration-300">LifePath</div>
+        
+        <!-- Desktop Navigation -->
+        <nav id="desktop-nav" class="hidden lg:flex items-center gap-8 bg-white/20 backdrop-blur-md px-8 py-3 rounded-full border border-white/20 z-50 absolute left-1/2 -translate-x-1/2 transition-colors duration-300">
+            <a href="#home" class="nav-link text-white text-sm font-medium hover:text-gray-200 hover:-translate-y-0.5 transition-all duration-300">Home</a>
+            <a href="#about" class="nav-link text-white/80 text-sm font-medium hover:text-white hover:-translate-y-0.5 transition-all duration-300">About</a>
+            <a href="#product" class="nav-link text-white/80 text-sm font-medium hover:text-white hover:-translate-y-0.5 transition-all duration-300">Product</a>
+            <a href="#services" class="nav-link text-white/80 text-sm font-medium hover:text-white hover:-translate-y-0.5 transition-all duration-300">Services</a>
+            <a href="#appointment" class="nav-link text-white/80 text-sm font-medium hover:text-white hover:-translate-y-0.5 transition-all duration-300">Appointment</a>
+        </nav>
+
+        <!-- Desktop Right Actions -->
+        <div class="hidden md:flex items-center gap-4 z-50 mr-2 md:mr-8">
+            <!-- Dark Mode Toggle Button -->
+            <button id="theme-toggle" class="flex items-center justify-center bg-white/20 dark:bg-neutral-900/50 backdrop-blur-md border border-white/20 dark:border-neutral-700 text-white w-12 h-12 rounded-full hover:bg-white/30 dark:hover:bg-neutral-800 transition-all shadow-sm duration-300" aria-label="Toggle Dark Mode">
+                <!-- Moon Icon (Default visible in Light Mode) -->
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <!-- Sun Icon (Visible in Dark Mode) -->
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+
+            <!-- Desktop Call Button -->
+            <a href="tel:+256700000000" id="call-btn" class="flex items-center gap-2 bg-white/20 dark:bg-neutral-900/50 backdrop-blur-md border border-white/20 dark:border-neutral-700 text-white px-6 py-3 rounded-full font-semibold text-sm hover:bg-white/30 dark:hover:bg-neutral-800 transition-all shadow-sm duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.48-4.18-7.076-7.076l1.293-.97c.362-.271.527-.733.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+                Call Now
+            </a>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button id="mobile-menu-btn" class="lg:hidden relative z-50 p-2 text-white hover:bg-white/10 rounded-lg transition-colors" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+    </header>
+
+    <!-- Mobile Slide-out Menu Panel -->
+    <div id="mobile-menu-panel" class="fixed inset-0 z-[60] bg-gray-900/40 backdrop-blur-xl transform translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden flex flex-col items-center">
+        
+        <!-- Menu Header (matches main header spacing for the close button) -->
+        <div class="w-full px-6 py-6 flex justify-end max-w-[1400px] mx-auto">
+            <button id="close-menu-btn" class="relative z-50 p-2 text-white hover:bg-white/10 rounded-lg transition-colors" aria-label="Close menu">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <nav class="flex flex-col items-center gap-8 w-full px-6 flex-1 justify-center pb-20">
+            <a href="#home" class="mobile-nav-link text-white text-3xl font-medium hover:text-gray-300 transition">Home</a>
+            <a href="#about" class="mobile-nav-link text-white/80 text-3xl font-medium hover:text-white transition">About</a>
+            <a href="#product" class="mobile-nav-link text-white/80 text-3xl font-medium hover:text-white transition">Product</a>
+            <a href="#services" class="mobile-nav-link text-white/80 text-3xl font-medium hover:text-white transition">Services</a>
+            <a href="#appointment" class="mobile-nav-link text-white/80 text-3xl font-medium hover:text-white transition">Appointment</a>
+            
+            <div class="w-full h-[1px] bg-white/10 my-4 max-w-xs"></div>
+            
+            <a href="tel:+256700000000" class="flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition shadow-sm w-full max-w-xs justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.48-4.18-7.076-7.076l1.293-.97c.362-.271.527-.733.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+                Call Now
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home / Hero Section -->
+        <section id="home" class="relative min-h-[92vh] flex items-center pt-32 pb-20 px-6 sm:px-12 lg:px-24 mx-4 mt-4 rounded-[2rem] overflow-hidden bg-gray-900">
+            <!-- Background Image -->
+            <div class="absolute inset-0 w-full h-full">
+                <img src="./images/kampala_family_selfie_wide.png" alt="Joyful Ugandan family wide-angle dental care selfie" class="w-full h-full object-cover" />
+            </div>
+            
+            <!-- Gradient overlays to make text pop over background -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-black/10"></div>
+
+            <div class="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-start pr-0 lg:pr-32">
+                <h1 class="text-6xl md:text-7xl lg:text-[6rem] font-medium text-white leading-[1.05] mb-6 tracking-tight">
+                    Seamless<br/>Dental <span class="inline-flex items-center gap-2">Care <svg class="w-12 h-12 inline-block -mt-1 opacity-90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.5 2 7 5 7 5v4c0 1.5 1 3 2 4v6h6v-6c1-1 2-2.5 2-4V5s-1.5-3-5-3zm0 2c2.5 0 3 2 3 2v4c0 .8-.5 1.5-1 2-1 1-1 2.5-1 2.5v4.5h-2v-4.5s0-1.5-1-2.5c-.5-.5-1-1.2-1-2V6s.5-2 3-2z"/></svg></span>
+                </h1>
+                <p class="text-white/80 text-lg md:text-xl max-w-md mb-10 leading-relaxed font-light">
+                    Whether it's a routine checkup or a major dental procedure, our experienced professionals are just a call away.
+                </p>
+                <a href="#appointment" class="inline-flex items-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-full font-medium text-sm hover:bg-gray-100 transition shadow-lg group">
+                    Book Appointment
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </a>
+            </div>
+        </section> <!-- End Hero Section -->
+
+        <!-- About Us Section -->
+        <section id="about" class="py-24 px-6 sm:px-12 lg:px-24 mx-auto max-w-[1400px]">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left Image -->
+                <div class="lg:col-span-3 mt-12 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <img src="./images/dentist_exam.png" alt="Dentist Examination" class="w-full h-[32rem] object-cover rounded-[2rem] shadow-sm transform hover:scale-[1.02] transition duration-500" />
+                </div>
+
+                <!-- Center Content -->
+                <div class="lg:col-span-6 flex flex-col items-center text-center px-4 lg:px-12 mt-4 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-200 ease-out">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="h-[1px] w-8 bg-orange-200"></div>
+                        <span class="text-[13px] font-medium text-orange-400 tracking-wider lowercase">(about us)</span>
+                        <div class="h-[1px] w-8 bg-orange-200"></div>
+                    </div>
+                    
+                    <h2 class="text-4xl md:text-[2.75rem] font-medium text-gray-900 dark:text-neutral-100 mb-6 leading-tight tracking-tight">
+                        A Simple Way to Save<br/>on Dental Care
+                    </h2>
+                    
+                    <p class="text-gray-500/80 dark:text-neutral-300 text-base md:text-[15px] mb-8 max-w-[28rem] leading-relaxed font-light">
+                        Our team of skilled and experienced dental professionals strives to create comfortable and welcoming environment for each and every patient. We offer a wide range of services.
+                    </p>
+                    
+                    <a href="#appointment" class="inline-flex items-center gap-3 bg-gray-900 text-white dark:bg-neutral-100 dark:text-neutral-900 px-8 py-3.5 rounded-full font-medium text-sm hover:shadow-xl hover:-translate-y-1 hover:bg-black dark:hover:bg-white transition-all duration-300 shadow-md group mb-12">
+                        Book Appointment
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+
+                    <!-- Bottom Center Image -->
+                    <div class="w-full">
+                        <img src="./images/perfect_smile.png" alt="Perfect Smile" class="w-full h-56 object-cover rounded-[2rem] shadow-sm transform hover:scale-[1.02] transition duration-500" />
+                    </div>
+                </div>
+
+                <!-- Right Side -->
+                <div class="lg:col-span-3 flex flex-col justify-between h-full reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-300 ease-out">
+                    <img src="./images/patient_retractor.png" alt="Patient Checkup" class="w-full h-[28rem] object-cover rounded-[2rem] shadow-sm mb-12 transform hover:scale-[1.02] transition duration-500" />
+                    
+                    <div class="mt-auto pl-2">
+                        <h3 class="text-[2.75rem] font-medium text-gray-900 dark:text-neutral-100 mb-1 tracking-tight">98%</h3>
+                        <p class="text-gray-500/80 dark:text-neutral-300 text-sm leading-relaxed font-light">Client satisfaction<br/>with our service</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Meet the Team Section -->
+        <section id="team" class="py-24 px-6 sm:px-12 lg:px-24 mx-auto max-w-[1400px]">
+            <div class="flex flex-col mb-16 gap-4 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out text-center lg:text-left">
+                <h2 class="text-4xl md:text-[3.5rem] font-medium text-gray-900 dark:text-neutral-100 leading-[1.1] tracking-tight">
+                    Meet Our Expert Dental Team
+                </h2>
+                <p class="text-gray-500/80 dark:text-neutral-300 text-[16px] leading-relaxed font-light max-w-2xl mx-auto lg:mx-0">
+                    Trusted professionals dedicated to your family's oral health in the heart of Kampala.
+                </p>
+            </div>
+
+            <!-- Team Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 w-full">
+                
+                <!-- Card 1: Dr. Apollo -->
+                <div class="bg-blue-50/50 dark:bg-neutral-800 rounded-[2.5rem] p-8 flex flex-col items-center text-center relative group hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer border border-blue-100 dark:border-neutral-700 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <!-- Photo -->
+                    <div class="w-32 h-32 rounded-[2rem] overflow-hidden mb-6 border-4 border-white dark:border-neutral-700 shadow-sm group-hover:scale-105 transition-transform duration-500">
+                        <img src="./images/dentist_headshot_male.png" alt="Dr. Apollo Mukasa" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Info -->
+                    <h3 class="text-[1.35rem] font-semibold text-gray-900 dark:text-neutral-100 mb-1 tracking-tight">Dr. Apollo Mukasa</h3>
+                    <p class="text-blue-600/80 dark:text-neutral-300 text-[14px] font-medium mb-6">Senior Dentist / Orthodontist</p>
+                    
+                    <!-- Action Button -->
+                    <button onclick="openWhatsAppBooking()" class="mt-auto w-full flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 text-gray-800 dark:text-neutral-100 border border-gray-200 dark:border-neutral-600 px-6 py-3 rounded-2xl font-medium text-sm hover:bg-green-50 dark:hover:bg-green-600 hover:text-green-700 dark:hover:text-white hover:border-green-200 dark:hover:border-green-500 transition-colors shadow-sm group-hover:shadow">
+                        <svg class="w-5 h-5 text-green-500 dark:text-green-400 group-hover:dark:text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.383 0 12.028c0 2.122.553 4.195 1.605 6.01L.034 23.993l6.095-1.597c1.765.98 3.766 1.496 5.9 1.496 6.645 0 12.03-5.383 12.03-12.029C24.06 5.383 18.675 0 12.031 0zm0 21.905c-1.782 0-3.52-.477-5.053-1.385l-.36-.214-3.755.984.996-3.66-.236-.376A9.953 9.953 0 0 1 2.083 12.03c0-5.502 4.478-9.98 9.95-9.98 5.47 0 9.947 4.478 9.947 9.98 0 5.501-4.476 9.98-9.95 9.98zm5.454-7.442c-.297-.15-1.765-.87-2.037-.97-.272-.1-4.706.15-.595.645-.125.495-.595 1.763-8.683-1.61-4.254-2.617-5.228-4.225-5.353-.495-.124-1.892 1.34-1.996 1.49-.105.15-.105.348-.105.497 0s.198.05.348.348c.15.297 1.05 2.585 1.15 2.783.1.2.148.42.024.646-.124.225-.198.348-.346.645-.15.298-.346.595-.495.744-.148.15-.348.175-.645.025-.297-.15-1.258-.464-2.398-1.48C4.54 11.026 3.763 9.774 3.614 9.526c-.148-.25-.015-.384.06-.508.134-.225.297-.348.445-.546.15-.198.198-.348.297-.595.1-.25.05-.47-.024-.62-.075-.15-.867-2.09-.1.185-3.045-.25-.098-.5-.124-.5-.16 0-.348-.025-.52-.025-.175 0-.445.064-.67.31-.224.248-.867.848-.867 2.066s.89 2.398 1.015 2.564c.124.165 1.75 2.67 4.238 3.744 1.83.784 2.564.848 3.398.714.835-.134 2.222-.249 2.564-.495.348-.248.595-.595.595-1.015 0-.42-.1-.768-.198-.867-.1-.1-.346-.15-.644-.3z"/></svg>
+                        Book with Dr. Apollo
+                    </button>
+                </div>
+
+                <!-- Card 2: Placeholder Colleague -->
+                <div class="bg-gray-50/50 dark:bg-neutral-800 rounded-[2.5rem] p-8 flex flex-col items-center text-center relative group hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer border border-gray-100 dark:border-neutral-700 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-100 ease-out">
+                    <!-- Photo -->
+                    <div class="w-32 h-32 bg-gray-200 dark:bg-neutral-700 rounded-[2rem] overflow-hidden mb-6 border-4 border-white dark:border-neutral-700 shadow-sm flex items-center justify-center text-gray-400 group-hover:scale-105 transition-transform duration-500">
+                        <svg class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                    </div>
+                    
+                    <!-- Info -->
+                    <h3 class="text-[1.35rem] font-semibold text-gray-900 dark:text-neutral-100 mb-1 tracking-tight">Dr. Sarah Katusiime</h3>
+                    <p class="text-gray-500/80 dark:text-neutral-300 text-[14px] font-medium mb-6">Pediatric Dentist</p>
+                    
+                    <!-- Action Button -->
+                    <a href="#" class="mt-auto w-full inline-block text-center text-[14px] font-semibold text-gray-900 dark:text-neutral-100 border-b-2 border-transparent hover:border-gray-900 dark:hover:border-neutral-100 pb-1 transition-all">
+                        Read Bio
+                    </a>
+                </div>
+
+                <!-- Card 3: Placeholder Colleague -->
+                <div class="bg-gray-50/50 dark:bg-neutral-800 rounded-[2.5rem] p-8 flex flex-col items-center text-center relative group hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer border border-gray-100 dark:border-neutral-700 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-200 ease-out">
+                    <!-- Photo -->
+                    <div class="w-32 h-32 bg-gray-200 dark:bg-neutral-700 rounded-[2rem] overflow-hidden mb-6 border-4 border-white dark:border-neutral-700 shadow-sm flex items-center justify-center text-gray-400 group-hover:scale-105 transition-transform duration-500">
+                        <svg class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                    </div>
+                    
+                    <!-- Info -->
+                    <h3 class="text-[1.35rem] font-semibold text-gray-900 dark:text-neutral-100 mb-1 tracking-tight">Dr. Musinguzi Daniel</h3>
+                    <p class="text-gray-500/80 dark:text-neutral-300 text-[14px] font-medium mb-6">Cosmetic Dental Specialist</p>
+                    
+                    <!-- Action Button -->
+                    <a href="#" class="mt-auto w-full inline-block text-center text-[14px] font-semibold text-gray-900 dark:text-neutral-100 border-b-2 border-transparent hover:border-gray-900 dark:hover:border-neutral-100 pb-1 transition-all">
+                        Read Bio
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Services Section Part 2 (Green background) -->
+        <section class="py-24 px-6 sm:px-12 lg:px-24 mx-4 mt-8 rounded-[2rem] overflow-hidden bg-[#DFEFD4]">
+            <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-5 flex flex-col h-full justify-between lg:pr-12 pt-12 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <div>
+                        <div class="flex items-center gap-4 mb-20 lg:mb-32">
+                            <span class="text-[13px] font-medium text-gray-600 tracking-wider lowercase">(our works)</span>
+                            <div class="h-[1px] w-20 bg-gray-400/40"></div>
+                        </div>
+                        
+                        <p class="text-gray-600 text-[15px] mb-8 max-w-md leading-relaxed font-light">
+                            Our team of skilled and experienced dental professionals strives to create comfortable and welcoming environment for each.
+                        </p>
+                        
+                        <a href="#appointment" class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-3.5 rounded-full font-medium text-sm hover:shadow-xl hover:-translate-y-1 hover:bg-black transition-all duration-300 shadow-md group">
+                            Book Appointment
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Happy Members Stats -->
+                    <div class="mt-20 flex items-center gap-5">
+                        <div class="flex -space-x-4">
+                            <div class="w-14 h-14 rounded-full border-2 border-[#DFEFD4] bg-green-200 shadow-sm opacity-50"></div>
+                            <div class="w-14 h-14 rounded-full border-2 border-[#DFEFD4] bg-white flex items-center justify-center text-xs text-gray-500 overflow-hidden shadow-md">
+                                <img src="https://ui-avatars.com/api/?name=Happy+Member&background=1f2937&color=fff&size=56" alt="Avatar">
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 text-base">10K+ happy</p>
+                            <p class="text-gray-600/80 text-[15px]">member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Images/Services -->
+                <div class="lg:col-span-7 relative pt-8 lg:pt-0">
+                    
+                    <!-- Top heading -->
+                    <div class="flex justify-start lg:justify-end mb-16 lg:mb-20 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-100 ease-out">
+                        <h2 class="text-4xl md:text-[3.5rem] font-medium text-gray-900 leading-[1.1] tracking-tight text-left lg:text-right max-w-md pt-4">
+                            Services We Provide<br/>Are Listed Below
+                        </h2>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-6 lg:gap-8 justify-end w-full relative z-10">
+                        <!-- Left Image Card -->
+                        <div class="w-full md:w-[48%] flex flex-col mt-0 lg:mt-16 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-200 ease-out">
+                            <img src="./images/teeth_straightening.png" alt="Teeth Straightening" class="w-full aspect-[4/5] object-cover rounded-[2rem] shadow-sm mb-6 transform hover:scale-[1.02] transition duration-500" />
+                            <h4 class="text-[1.35rem] font-medium text-gray-900 mb-2">Teeth Straightening</h4>
+                            <p class="text-gray-500/80 text-[15px] font-light">Improve your smile with cleaning.</p>
+                        </div>
+
+                        <!-- Right Image Card -->
+                        <div class="w-full md:w-[48%] flex flex-col mt-8 lg:mt-32 relative z-20 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-300 ease-out">
+                            <img src="./images/dental_implant.png" alt="Dental Implant" class="w-full aspect-[4/5] object-cover rounded-[2rem] shadow-sm mb-6 transform hover:scale-[1.02] transition duration-500" />
+                            <h4 class="text-[1.35rem] font-medium text-gray-900 mb-2">Dental Implant</h4>
+                            <p class="text-gray-500/80 text-[15px] font-light">Improve your smile with cleaning.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Cost Care Section -->
+        <section id="cost" class="py-24 px-6 sm:px-12 lg:px-24 mx-auto max-w-[1400px]">
+             <div class="flex flex-col lg:flex-row items-center justify-between gap-16 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                 
+                 <!-- Left Text -->
+                 <div class="lg:w-1/2">
+                     <div class="flex items-center gap-4 mb-6">
+                        <div class="h-[1px] w-8 bg-orange-200"></div>
+                        <span class="text-[13px] font-medium text-orange-400 tracking-wider lowercase">(cost care)</span>
+                        <div class="h-[1px] w-8 bg-orange-200"></div>
+                    </div>
+                    
+                    <h2 class="text-4xl md:text-[3.5rem] font-medium text-gray-900 dark:text-neutral-100 mb-8 leading-[1.1] tracking-tight">
+                        Doctor Consultations<br/>Are <span class="rounded-full bg-orange-100 dark:bg-orange-900/40 dark:text-orange-200 px-3 inline-block">Free</span> & Trusted
+                    </h2>
+                    
+                    <p class="text-gray-500/80 dark:text-neutral-300 text-[15px] mb-10 max-w-md leading-relaxed font-light">
+                        Team carefully evaluates your results to provide actionable insights for improving your health & lifespan.
+                    </p>
+                 </div>
+
+                 <!-- Right Text & Button -->
+                 <div class="lg:w-1/2 flex flex-col items-start lg:items-end">
+                     <p class="text-gray-500/80 dark:text-neutral-300 text-[15px] mb-8 max-w-md leading-relaxed font-light lg:text-right">
+                        Take control of your health with a comprehensive assessment unlike any other. We use the latest medical innovations, including next-generation MRI, cardiovascular & neurocognitive assessments, early cancer detection, and genetic testing.
+                    </p>
+                     <a href="#appointment" class="inline-flex items-center gap-3 bg-gray-900 text-white dark:bg-neutral-100 dark:text-neutral-900 px-8 py-3.5 rounded-full font-medium text-sm hover:shadow-xl hover:-translate-y-1 hover:bg-black dark:hover:bg-white transition-all duration-300 shadow-md group">
+                        Book Appointment
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                 </div>
+             </div>
+
+             <!-- Bottom Images Grid -->
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                 <div class="md:col-span-1 flex flex-col gap-8 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                     <!-- 98% Block -->
+                     <div class="bg-white dark:bg-neutral-800 rounded-[2rem] p-10 flex flex-col justify-center border border-gray-100 dark:border-neutral-700 shadow-sm aspect-square transform hover:-translate-y-1 transition duration-500">
+                        <h3 class="text-[3.5rem] font-medium text-gray-900 dark:text-neutral-100 mb-2 tracking-tight">98%</h3>
+                        <p class="text-gray-500/80 dark:text-neutral-300 text-[14px] leading-[1.6] font-light">Client satisfaction<br/>with our service</p>
+                    </div>
+                 </div>
+                 <div class="md:col-span-1 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-100 ease-out">
+                     <img src="./images/dentist_exam.png" alt="Dentist Exam" class="w-full h-full object-cover rounded-[2rem] shadow-sm transform hover:scale-[1.02] transition duration-500" />
+                 </div>
+                 <div class="md:col-span-1 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-200 ease-out">
+                     <img src="./images/dentist_working.png" alt="Dentist Working" class="w-full h-full object-cover rounded-[2rem] shadow-sm transform hover:scale-[1.02] transition duration-500" />
+                 </div>
+             </div>
+        </section>
+        <!-- What Our Clients Say Section -->
+        <section id="testimonials" class="py-24 px-6 sm:px-12 lg:px-24 mx-4 mt-8 rounded-[2rem] bg-[#EAE0F8] dark:bg-neutral-900 overflow-hidden reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out text-gray-900">
+            <div class="max-w-[1400px] mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                    <div class="max-w-xl">
+                        <h2 class="text-4xl md:text-[3.5rem] font-medium leading-[1.1] tracking-tight mb-6 text-gray-900 dark:text-neutral-100">
+                            What Our Clients Say
+                        </h2>
+                        <p class="text-[15px] leading-relaxed font-light max-w-sm text-gray-700 dark:text-neutral-300">
+                            Team carefully evaluates your results to provide actionable insights for improving your health & lifespan.
+                        </p>
+                    </div>
+                    <!-- Navigation Arrows -->
+                    <div class="flex gap-4 mb-2">
+                        <button class="w-12 h-12 rounded-full border border-gray-300 dark:border-neutral-600 flex items-center justify-center bg-white dark:bg-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-700 transition shadow-sm text-gray-900 dark:text-neutral-100 group">
+                            <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+                        </button>
+                        <button class="w-12 h-12 rounded-full bg-black dark:bg-neutral-100 flex items-center justify-center hover:bg-gray-900 dark:hover:bg-white transition shadow-md text-white dark:text-neutral-900 group">
+                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Testimonial Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white dark:bg-neutral-800 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between shadow-sm transform hover:-translate-y-1 transition duration-500">
+                        <div>
+                            <img src="https://ui-avatars.com/api/?name=Kevin+Martin&background=1f2937&color=fff&size=64" alt="Kevin Martin" class="w-14 h-14 rounded-full mb-8 shadow-sm" />
+                            <h4 class="text-[1.25rem] font-semibold text-gray-900 dark:text-neutral-100 mb-4 tracking-tight">Schedules that work for you</h4>
+                            <p class="text-gray-500/90 dark:text-neutral-300 text-[15px] leading-relaxed font-light mb-8">
+                                "Our visual designer lets you quickly drag and drop your own way to custom-apps for both keep desktop, mobile & also tab for report."
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-100 dark:border-neutral-700 pt-6 mt-auto">
+                            <span class="font-medium text-[15px] text-gray-900 dark:text-neutral-100">Kevin Martin</span>
+                            <div class="flex text-[#FABC2C] gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white dark:bg-neutral-800 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between shadow-sm transform hover:-translate-y-1 transition duration-500">
+                        <div>
+                            <div class="w-14 h-14 rounded-full mb-8 bg-gray-100 dark:bg-neutral-700 flex items-center justify-center text-gray-400 font-bold overflow-hidden shadow-sm"><img src="https://ui-avatars.com/api/?name=Kevin+Martin&background=f3e8ff&color=4b5563&size=64" class="w-full h-full object-cover"></div>
+                            <h4 class="text-[1.25rem] font-semibold text-gray-900 dark:text-neutral-100 mb-4 tracking-tight">Health screenings for seniors</h4>
+                            <p class="text-gray-500/90 dark:text-neutral-300 text-[15px] leading-relaxed font-light mb-8">
+                                "Our visual designer lets you quickly drag and drop your own way to custom-apps for both keep desktop, mobile & also tab for report."
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-100 dark:border-neutral-700 pt-6 mt-auto">
+                            <span class="font-medium text-[15px] text-gray-900 dark:text-neutral-100">Kevin Martin</span>
+                            <div class="flex text-[#FABC2C] gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white dark:bg-neutral-800 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between shadow-sm transform hover:-translate-y-1 transition duration-500 hidden md:flex">
+                        <div>
+                            <div class="w-14 h-14 rounded-full mb-8 bg-gray-100 dark:bg-neutral-700 flex items-center justify-center text-gray-400 font-bold overflow-hidden shadow-sm"><img src="https://ui-avatars.com/api/?name=Kevin+Martin&background=dbeafe&color=1e40af&size=64" class="w-full h-full object-cover"></div>
+                            <h4 class="text-[1.25rem] font-semibold text-gray-900 dark:text-neutral-100 mb-4 tracking-tight">Seniors stay independent</h4>
+                            <p class="text-gray-500/90 dark:text-neutral-300 text-[15px] leading-relaxed font-light mb-8">
+                                "Our visual designer lets you quickly drag and drop your own way to custom-apps for both keep desktop, mobile & also tab for report."
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-100 dark:border-neutral-700 pt-6 mt-auto">
+                            <span class="font-medium text-[15px] text-gray-900 dark:text-neutral-100">Kevin Martin</span>
+                            <div class="flex text-[#FABC2C] gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Insights Section -->
+        <section id="insights" class="py-24 px-6 sm:px-12 lg:px-24 mx-auto max-w-[1400px]">
+            <h2 class="text-4xl md:text-[3.25rem] font-medium text-gray-900 dark:text-neutral-100 leading-[1.1] tracking-tight mb-12 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                Latest Insights
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[30rem]">
+                <!-- Card 1 -->
+                <a href="#" class="block bg-[#F8F4EC] dark:bg-neutral-800 rounded-[2rem] p-10 flex flex-col justify-start items-center text-center group hover:-translate-y-2 transition duration-500 cursor-pointer h-full reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-100 ease-out min-h-[24rem]">
+                    <div class="border border-gray-400/40 dark:border-gray-500/40 rounded-full px-4 py-1.5 text-[13px] font-medium text-gray-800 dark:text-neutral-300 mb-12 bg-transparent transition-colors">July 9, 2025</div>
+                    <div class="flex-1 flex flex-col justify-center">
+                        <h3 class="text-[1.75rem] font-medium text-gray-900 dark:text-neutral-100 mb-6 max-w-[14rem] mx-auto tracking-tight leading-snug">
+                            Medicare And Long Term Care
+                        </h3>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-gray-600 dark:text-neutral-400 leading-relaxed font-light max-w-[14rem] mx-auto">
+                            As seniors age, understanding Medicare and the range of long-term care options becomes. Many families are unsure which services
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Card 2 (Image overlay) -->
+                <a href="#" class="block relative rounded-[2rem] p-10 flex flex-col justify-start items-center text-center overflow-hidden group hover:-translate-y-2 transition duration-500 cursor-pointer h-full reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-200 ease-out min-h-[24rem]">
+                    <img src="./images/dentist_working.png" alt="Dentist Working" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition duration-700" />
+                    <!-- Gradient overlay mimicking screenshot's lower blue tint and overall dark wash -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/90 via-black/40 to-black/30 group-hover:bg-black/50 transition-colors"></div>
+                    
+                    <div class="relative z-10 border border-white/50 rounded-full px-4 py-1.5 text-[13px] font-medium text-white mb-12 bg-white/10 backdrop-blur-sm shadow-sm transition-colors">July 9, 2025</div>
+                    <div class="relative z-10 flex-1 flex flex-col justify-center w-full">
+                        <h3 class="text-[1.75rem] font-medium text-white mb-6 max-w-[14rem] mx-auto tracking-tight leading-snug drop-shadow-md">
+                            Medicare And Long Term Care
+                        </h3>
+                    </div>
+                    <div class="relative z-10 w-full mt-auto text-shadow">
+                        <p class="text-[13px] text-white/90 leading-relaxed font-light max-w-[14rem] mx-auto drop-shadow-md">
+                            As seniors age, understanding Medicare and the range of long-term care options becomes. Many families are unsure which services
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="#" class="block bg-[#F8F4EC] dark:bg-neutral-800 rounded-[2rem] p-10 flex flex-col justify-start items-center text-center group hover:-translate-y-2 transition duration-500 cursor-pointer h-full hidden md:flex reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-300 ease-out min-h-[24rem]">
+                    <div class="border border-gray-400/40 dark:border-gray-500/40 rounded-full px-4 py-1.5 text-[13px] font-medium text-gray-800 dark:text-neutral-300 mb-12 bg-transparent transition-colors">July 9, 2025</div>
+                    <div class="flex-1 flex flex-col justify-center">
+                        <h3 class="text-[1.75rem] font-medium text-gray-900 dark:text-neutral-100 mb-6 max-w-[14rem] mx-auto tracking-tight leading-snug">
+                            Medicare And Long Term Care
+                        </h3>
+                    </div>
+                    <div>
+                        <p class="text-[13px] text-gray-600 dark:text-neutral-400 leading-relaxed font-light max-w-[14rem] mx-auto">
+                            As seniors age, understanding Medicare and the range of long-term care options becomes. Many families are unsure which services
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#0A0A0A] text-white mt-12 mx-4 mb-4 rounded-[2.5rem] pt-24 pb-0 overflow-hidden relative reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+        
+        <!-- Giant Background Text (Watermark) -->
+        <div class="absolute bottom-0 left-0 w-full flex justify-center z-0 pointer-events-none select-none tracking-tighter">
+            <h1 class="text-[25vw] md:text-[22vw] font-bold text-[#1F1F1F] leading-none text-center whitespace-nowrap animate-subtle-bounce translate-y-[28%]">LifePath</h1>
+        </div>
+
+        <div class="max-w-[1400px] mx-auto flex flex-col lg:flex-row justify-between relative z-10 gap-16 lg:gap-8 pb-32 lg:pb-48 px-8 sm:px-12 lg:px-24">
+            
+            <!-- Left Side / Newsletter -->
+            <div class="w-full lg:w-[45%]">
+                <h3 class="text-3xl lg:text-[2.5rem] font-medium leading-tight tracking-tight mb-8 text-white/90">
+                    Reach out for your<br/>perfect smile.
+                </h3>
+                
+                <a href="mailto:info@kampaladental.co.ug" class="inline-flex items-center gap-3 text-lg font-light text-white/80 hover:text-white transition-colors border-b border-white/20 hover:border-white/60 pb-2 group">
+                    info@kampaladental.co.ug
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                </a>
+            </div>
+            
+            <!-- Right Side Links & Socials -->
+            <div class="w-full lg:w-[50%] flex flex-col sm:flex-row justify-between gap-y-12 gap-x-8 text-[15px] text-white/60 font-light mt-4 lg:mt-0 lg:pl-12">
+                <!-- Navigation -->
+                <ul class="flex flex-col gap-5 min-w-[8rem]">
+                    <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Our Mission</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                    <li><a href="#contact" class="hover:text-white transition-colors">Contact Us</a></li>
+                </ul>
+
+                <!-- Social Icons -->
+                <div class="flex flex-col gap-6">
+                    <span class="text-white/40 text-sm tracking-wider uppercase">Follow Us</span>
+                    <div class="flex items-center gap-6">
+                        <!-- Facebook -->
+                        <a href="#" class="text-white/40 hover:text-[#1877F2] hover:scale-110 transition-all duration-300" aria-label="Facebook">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" class="text-white/40 hover:text-[#E4405F] hover:scale-110 transition-all duration-300" aria-label="Instagram">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <!-- Twitter / X -->
+                        <a href="#" class="text-white/40 hover:text-white hover:scale-110 transition-all duration-300" aria-label="Twitter">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+                        </a>
+                        <!-- LinkedIn -->
+                        <a href="#" class="text-white/40 hover:text-[#0A66C2] hover:scale-110 transition-all duration-300" aria-label="LinkedIn">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.475-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <!-- YouTube -->
+                        <a href="#" class="text-white/40 hover:text-[#FF0000] hover:scale-110 transition-all duration-300" aria-label="YouTube">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </div>
+                </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <button id="whatsapp-fab" onclick="openWhatsAppBooking()" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all duration-500 opacity-0 pointer-events-none z-50 transform hover:scale-110" aria-label="Book Appointment via WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </button>
+
+    <!-- Custom JS -->
+    <script src="./js/main.js"></script>
+</body>
+</html>
