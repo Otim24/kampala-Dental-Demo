@@ -232,4 +232,43 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update every 60 seconds
         setInterval(updateTime, 60000);
     }
+
+    // --- Stat Counter Animation Logic ---
+    const statCounter = document.getElementById('stat-counter');
+    if (statCounter) {
+        const duration = 1500; // 1.5 seconds
+        const targetValue = 98;
+        const framesPerSecond = 60;
+        const totalFrames = Math.round((duration / 1000) * framesPerSecond);
+        let currentFrame = 0;
+        const increment = targetValue / totalFrames;
+
+        const animateCounter = () => {
+            currentFrame++;
+            const currentValue = Math.round(increment * currentFrame);
+            
+            if (currentFrame <= totalFrames) {
+                statCounter.textContent = currentValue;
+                requestAnimationFrame(animateCounter);
+            } else {
+                statCounter.textContent = targetValue; // ensure it ends exactly on 98
+            }
+        };
+
+        const statObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Start animation and stop observing
+                    requestAnimationFrame(animateCounter);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5 // Trigger when 50% of the element is visible
+        });
+
+        statObserver.observe(statCounter);
+    }
 });
