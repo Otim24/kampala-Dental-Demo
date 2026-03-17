@@ -139,38 +139,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
     if (themeToggleBtn) {
+        const setDarkIconVisible = () => {
+            // Moon icon visible (Light Theme)
+            themeToggleDarkIcon.classList.remove('opacity-0', '-rotate-90', 'scale-50');
+            themeToggleDarkIcon.classList.add('opacity-100');
+            
+            // Sun icon hidden
+            themeToggleLightIcon.classList.add('opacity-0', 'rotate-90', 'scale-50');
+            themeToggleLightIcon.classList.remove('opacity-100');
+        };
+
+        const setLightIconVisible = () => {
+            // Sun icon visible (Dark Theme)
+            themeToggleLightIcon.classList.remove('opacity-0', 'rotate-90', 'scale-50');
+            themeToggleLightIcon.classList.add('opacity-100');
+            
+            // Moon icon hidden
+            themeToggleDarkIcon.classList.add('opacity-0', '-rotate-90', 'scale-50');
+            themeToggleDarkIcon.classList.remove('opacity-100');
+        };
+
         // Change the icons inside the button based on previous settings
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            themeToggleLightIcon.classList.remove('hidden');
+            setLightIconVisible();
             document.documentElement.classList.add('dark');
         } else {
-            themeToggleDarkIcon.classList.remove('hidden');
+            setDarkIconVisible();
             document.documentElement.classList.remove('dark');
         }
 
         themeToggleBtn.addEventListener('click', function() {
-            // toggle icons inside button
-            themeToggleDarkIcon.classList.toggle('hidden');
-            themeToggleLightIcon.classList.toggle('hidden');
-
-            // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-            // if NOT set via local storage previously
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                setDarkIconVisible();
             } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                setLightIconVisible();
             }
         });
     }
