@@ -139,44 +139,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
     if (themeToggleBtn) {
-        const setDarkIconVisible = () => {
-            // Moon icon visible (Light Theme)
-            themeToggleDarkIcon.classList.remove('opacity-0', '-rotate-90', 'scale-50');
-            themeToggleDarkIcon.classList.add('opacity-100');
-            
-            // Sun icon hidden
-            themeToggleLightIcon.classList.add('opacity-0', 'rotate-90', 'scale-50');
-            themeToggleLightIcon.classList.remove('opacity-100');
-        };
-
-        const setLightIconVisible = () => {
-            // Sun icon visible (Dark Theme)
-            themeToggleLightIcon.classList.remove('opacity-0', 'rotate-90', 'scale-50');
-            themeToggleLightIcon.classList.add('opacity-100');
-            
-            // Moon icon hidden
-            themeToggleDarkIcon.classList.add('opacity-0', '-rotate-90', 'scale-50');
-            themeToggleDarkIcon.classList.remove('opacity-100');
-        };
-
         // Change the icons inside the button based on previous settings
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            setLightIconVisible();
+            themeToggleLightIcon.classList.remove('opacity-0', '-rotate-90');
+            themeToggleDarkIcon.classList.add('opacity-0', 'rotate-90');
             document.documentElement.classList.add('dark');
         } else {
-            setDarkIconVisible();
+            themeToggleDarkIcon.classList.remove('opacity-0', 'rotate-90');
+            themeToggleLightIcon.classList.add('opacity-0', '-rotate-90');
             document.documentElement.classList.remove('dark');
         }
 
         themeToggleBtn.addEventListener('click', function() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-                setDarkIconVisible();
+            // toggle icons inside button for crossfade
+            themeToggleDarkIcon.classList.toggle('opacity-0');
+            themeToggleDarkIcon.classList.toggle('rotate-90');
+            themeToggleLightIcon.classList.toggle('opacity-0');
+            themeToggleLightIcon.classList.toggle('-rotate-90');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            // if NOT set via local storage previously
             } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-                setLightIconVisible();
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
             }
         });
     }
