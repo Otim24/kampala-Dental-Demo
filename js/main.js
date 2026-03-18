@@ -1,8 +1,12 @@
 // main.js - Custom JavaScript for Dental Clinic
 
-// Global function for WhatsApp Booking
+// ============================================================
+// 🔧 CUSTOMISE FOR NEW CLIENT: WhatsApp Booking
+// - Change the phone number (256700000000) to the client's WhatsApp number (country code + number, no + sign).
+// - Update the pre-filled message text (Hello%20LifePath...) to use the client's clinic name.
+// - %20 = space, %2C = comma in URL encoding.
+// ============================================================
 window.openWhatsAppBooking = function() {
-    // Replace with the actual WhatsApp URL and pre-filled message
     window.open('https://wa.me/256700000000?text=Hello%20LifePath%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
 };
 
