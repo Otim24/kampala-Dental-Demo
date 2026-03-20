@@ -607,11 +607,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typewriterElement) {
         const words = ['Century', 'Excellence', 'Comfort'];
         let wordIndex = 0;
-        let charIndex = 0; // Starts at 0, first word is typed out initially or we can start with 'Century' already there
-        let isDeleting = true; // Start by deleting context since 'Century' is hardcoded in HTML for fallback
+        let charIndex = 0; 
+        let isDeleting = false; 
 
-        // Set initial state to match HTML
-        charIndex = words[0].length;
+        // Initial delay before first typing starts
+        setTimeout(type, 500);
         
         function type() {
             const currentWord = words[wordIndex];
@@ -624,22 +624,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 charIndex++;
             }
 
-            let typingSpeed = isDeleting ? 50 : 100;
+            // Smoother typing speeds
+            let typingSpeed = isDeleting ? 40 : 100;
 
+            // When full word is typed
             if (!isDeleting && charIndex === currentWord.length) {
                 typingSpeed = 2500; // Pause at end of word for readability
                 isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
+            } 
+            // When word is fully deleted
+            else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 wordIndex = (wordIndex + 1) % words.length;
-                typingSpeed = 500; // Pause before typing new word
+                typingSpeed = 600; // Pause before typing new word
+            }
+
+            // Introduce slight randomness for human-like typing when moving forward
+            if (!isDeleting && charIndex !== currentWord.length) {
+                typingSpeed += Math.random() * 50;
             }
 
             setTimeout(type, typingSpeed);
         }
-
-        // Start the effect after a brief 2 second delay so the user reads 'Century' first
-        setTimeout(type, 2500);
     }
 });
 
