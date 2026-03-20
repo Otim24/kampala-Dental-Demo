@@ -276,3 +276,203 @@ document.addEventListener('DOMContentLoaded', () => {
         statObserver.observe(statCounter);
     }
 });
+
+// ============================================================
+// Service Details Modal Logic
+// ============================================================
+const serviceData = {
+    straightening: {
+        title: "Teeth Straightening",
+        subtitle: "Orthodontics",
+        desc: "Custom clear aligners and modern braces for a perfectly straight smile. Our tailored approach ensures comfort and predictable results for all ages.",
+        duration: "12 - 24 months",
+        price: "UGX 3,500,000 - 8,000,000",
+        img: "./images/ugandan_teeth_straightening.png",
+        includes: [
+            "Comprehensive 3D scan & consultation",
+            "Custom treatment plan",
+            "All aligners or braces adjustments",
+            "Post-treatment retainers"
+        ],
+        steps: [
+            "<strong>1. Consultation:</strong> We scan your teeth and discuss your goals.",
+            "<strong>2. Fitting:</strong> Your custom aligners or braces are fitted.",
+            "<strong>3. Progression:</strong> Regular check-ins to monitor movement.",
+            "<strong>4. Perfect Smile:</strong> Final adjustments and retainer placement."
+        ]
+    },
+    implants: {
+        title: "Dental Implants",
+        subtitle: "Restoration",
+        desc: "Permanent, natural-looking tooth replacements that restore full function and confidence. Engineered for durability and a perfect custom fit.",
+        duration: "3 - 6 months total",
+        price: "UGX 1,500,000 - 3,000,000",
+        img: "./images/ugandan_dental_implant.png",
+        includes: [
+            "Pre-surgical CBCT scan",
+            "Titanium implant placement",
+            "Custom abutment & crown",
+            "Follow-up healing checks"
+        ],
+        steps: [
+            "<strong>1. Evaluation:</strong> Assessing bone health and planning the implant.",
+            "<strong>2. Surgery:</strong> Placing the titanium post into the jaw.",
+            "<strong>3. Healing:</strong> Osseointegration period (bone fusing to implant).",
+            "<strong>4. Restoration:</strong> Attaching the custom crown."
+        ]
+    },
+    whitening: {
+        title: "Teeth Whitening",
+        subtitle: "Brighten Your Smile",
+        desc: "Our professional teeth whitening treatments deliver dramatically brighter results compared to over-the-counter products. Using medical-grade whitening agents, we can lighten your teeth by up to 8 shades in a single in-clinic session.",
+        duration: "60 - 90 minutes",
+        price: "UGX 150,000 - 350,000",
+        img: "./images/ugandan_teeth_whitening.png",
+        includes: [
+            "Pre-treatment shade assessment",
+            "Medical-grade whitening gel",
+            "Post-treatment sensitivity check",
+            "Before & after documentation",
+            "Take-home maintenance tips"
+        ],
+        steps: [
+            "<strong>1. Shade Assessment:</strong> We photograph and record your current tooth shade.",
+            "<strong>2. Preparation:</strong> Gums and lips are carefully protected.",
+            "<strong>3. Application:</strong> Whitening gel is applied and optionally light-activated.",
+            "<strong>4. Reveal:</strong> Gel is removed to reveal your new, brighter smile."
+        ]
+    },
+    cleanings: {
+        title: "General Dentistry",
+        subtitle: "Preventive Care",
+        desc: "Comprehensive examinations and deep professional cleanings that act as the cornerstone of your long-term oral health and preventive care routines.",
+        duration: "45 - 60 minutes",
+        price: "UGX 80,000 - 150,000",
+        img: "./images/ugandan_dental_cleaning.png",
+        includes: [
+            "Full oral examination",
+            "Ultrasonic plaque removal",
+            "Professional polishing",
+            "Fluoride treatment optional"
+        ],
+        steps: [
+            "<strong>1. Exam:</strong> Checking for cavities or gum issues.",
+            "<strong>2. Scaling:</strong> Removing hardened plaque and tartar.",
+            "<strong>3. Polishing:</strong> Removing surface stains for a clean feel.",
+            "<strong>4. Flossing & Advice:</strong> Final clean and oral hygiene tips."
+        ]
+    },
+    emergency: {
+        title: "Emergency Care",
+        subtitle: "Urgent Relief",
+        desc: "Immediate, compassionate treatment for severe dental pain, trauma, and urgent conditions when you need it most. We prioritize your relief.",
+        duration: "Varies depending on issue",
+        price: "UGX 100,000+",
+        img: "./images/ugandan_emergency_care.png",
+        includes: [
+            "Priority immediate attention",
+            "Diagnostic X-ray if needed",
+            "Pain management and relief",
+            "Temporary or permanent fix"
+        ],
+        steps: [
+            "<strong>1. Triage:</strong> Immediate assessment of the pain or injury.",
+            "<strong>2. Diagnostics:</strong> X-rays to pinpoint the exact issue.",
+            "<strong>3. Relief:</strong> Administering anesthesia or pain relief.",
+            "<strong>4. Treatment:</strong> Addressing the root cause of the emergency."
+        ]
+    },
+    surgery: {
+        title: "Oral Surgery",
+        subtitle: "Expert Surgical Care",
+        desc: "Expert surgical procedures performed with precision and care, including safe extractions, wisdom teeth removal, and complex dental restorations.",
+        duration: "1 - 2 hours",
+        price: "UGX 200,000 - 800,000",
+        img: "./images/ugandan_oral_surgery.png",
+        includes: [
+            "Surgical consultation & X-rays",
+            "Local anesthesia or sedation",
+            "Safe surgical procedure",
+            "Post-op care instructions"
+        ],
+        steps: [
+            "<strong>1. Consultation:</strong> Reviewing X-rays and surgical plan.",
+            "<strong>2. Anesthesia:</strong> Ensuring you are completely numb and comfortable.",
+            "<strong>3. Procedure:</strong> Performing the extraction or surgery efficiently.",
+            "<strong>4. Recovery:</strong> Providing gauze, care instructions, and follow-up."
+        ]
+    }
+};
+
+window.openServiceModal = function(serviceKey) {
+    const data = serviceData[serviceKey];
+    if (!data) return;
+
+    // Populate Data
+    document.getElementById('modal-img').src = data.img;
+    document.getElementById('modal-subtitle').textContent = data.subtitle;
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-desc').textContent = data.desc;
+    document.getElementById('modal-duration').textContent = data.duration;
+    document.getElementById('modal-price').textContent = data.price;
+
+    // Populate Includes
+    const includesContainer = document.getElementById('modal-includes');
+    includesContainer.innerHTML = '';
+    data.includes.forEach(item => {
+        includesContainer.innerHTML += `
+            <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span class="text-gray-700 dark:text-neutral-300 text-[14.5px]">${item}</span>
+            </li>
+        `;
+    });
+
+    // Populate Steps
+    const stepsContainer = document.getElementById('modal-steps');
+    stepsContainer.innerHTML = '';
+    data.steps.forEach(step => {
+        stepsContainer.innerHTML += `
+            <div class="text-gray-700 dark:text-neutral-300 text-[14.5px] border-l-2 border-green-100 dark:border-green-900/50 pl-4 py-1">
+                ${step}
+            </div>
+        `;
+    });
+
+    // Show Modal
+    const modal = document.getElementById('service-modal');
+    const content = document.getElementById('service-modal-content');
+    
+    // Prevent body scrolling
+    document.body.style.overflow = 'hidden';
+    
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+};
+
+window.closeServiceModal = function() {
+    const modal = document.getElementById('service-modal');
+    const content = document.getElementById('service-modal-content');
+    
+    // Resume body scrolling
+    document.body.style.overflow = '';
+    
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+    }, 300);
+};
+
+// Also close on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('service-modal');
+        if (modal && !modal.classList.contains('opacity-0')) {
+            window.closeServiceModal();
+        }
+    }
+});
