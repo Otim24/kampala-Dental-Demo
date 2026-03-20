@@ -599,6 +599,50 @@ const testimonialsData = [
 let currentTestimonialIdx = 0;
 let testimonialTimer = null;
 
+// ==========================================
+// Typewriter Effect Logic for Hero Section
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const typewriterElement = document.getElementById('typewriter-text');
+    if (typewriterElement) {
+        const words = ['Century', 'Excellence', 'Comfort'];
+        let wordIndex = 0;
+        let charIndex = 0; // Starts at 0, first word is typed out initially or we can start with 'Century' already there
+        let isDeleting = true; // Start by deleting context since 'Century' is hardcoded in HTML for fallback
+
+        // Set initial state to match HTML
+        charIndex = words[0].length;
+        
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typingSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typingSpeed = 2500; // Pause at end of word for readability
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typingSpeed = 500; // Pause before typing new word
+            }
+
+            setTimeout(type, typingSpeed);
+        }
+
+        // Start the effect after a brief 2 second delay so the user reads 'Century' first
+        setTimeout(type, 2500);
+    }
+});
+
 function renderTestimonial(index) {
     const textEl = document.getElementById('testimonial-text');
     const authorBlock = document.getElementById('testimonial-author-block');
