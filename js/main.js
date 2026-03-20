@@ -606,46 +606,23 @@ function initTypewriter() {
     const typewriterElement = document.getElementById('typewriter-text');
     if (!typewriterElement) return;
     
-    // User requested typing MUST begin from "Starts"
-    const words = ['Starts at Century', 'Starts with Excellence', 'Starts with Comfort'];
-    let wordIndex = 0;
+    const textToType = "Starts at Century";
     let charIndex = 0; 
-    let isDeleting = false; 
     let timerId = null;
 
     function type() {
         if (!document.getElementById('typewriter-text')) return;
-        const currentWord = words[wordIndex];
         
-        if (isDeleting) {
-            typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-            charIndex++;
+        typewriterElement.textContent = textToType.substring(0, charIndex + 1);
+        charIndex++;
+
+        let typingSpeed = 80;
+
+        // Introduce slight randomness for human-like typing
+        if (charIndex < textToType.length) {
+            typingSpeed += Math.random() * 60;
+            timerId = setTimeout(type, typingSpeed);
         }
-
-        // Smoother typing speeds
-        let typingSpeed = isDeleting ? 30 : 80;
-
-        // When full word is typed
-        if (!isDeleting && charIndex === currentWord.length) {
-            typingSpeed = 3000; // Pause at end of word for readability
-            isDeleting = true;
-        } 
-        // When word is fully deleted
-        else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            wordIndex = (wordIndex + 1) % words.length;
-            typingSpeed = 600; // Pause before typing new word
-        }
-
-        // Introduce slight randomness for human-like typing when moving forward
-        if (!isDeleting && charIndex !== currentWord.length) {
-            typingSpeed += Math.random() * 40;
-        }
-
-        timerId = setTimeout(type, typingSpeed);
     }
     
     // Start effect shortly after load
