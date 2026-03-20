@@ -565,3 +565,94 @@ document.addEventListener('DOMContentLoaded', () => {
         window.renderFAQs('appointments');
     }
 });
+
+// ==========================================
+// Testimonials Slider Logic
+// ==========================================
+const testimonialsData = [
+    {
+        text: "The smile makeover at BrightSmile was absolutely worth every penny. Dr. Patel has an incredible eye for aesthetics and truly listened to what I wanted. Walking out with a brand new smile was one of the best feelings of my life.",
+        initials: "RW",
+        name: "Robert Williams",
+        subtitle: "Full Smile Makeover"
+    },
+    {
+        text: "I used to be terrified of the dentist, but this clinic completely changed my perspective. The staff is incredibly gentle, the environment is soothing, and my routine cleanings are now totally anxiety-free.",
+        initials: "SJ",
+        name: "Sarah Johnson",
+        subtitle: "Routine Care Patient"
+    },
+    {
+        text: "When I chipped my tooth on a weekend, I was panicking. They got me in immediately through their emergency line and fixed it perfectly. You can't even tell it was ever broken. Absolutely lifesavers!",
+        initials: "MD",
+        name: "Michael Davis",
+        subtitle: "Emergency Treatment"
+    },
+    {
+        text: "From the front desk to the dental chair, the experience here is 5-star. They took the time to explain every single step of my implant surgery, making me feel comfortable and confident in their care.",
+        initials: "LM",
+        name: "Linda Martinez",
+        subtitle: "Dental Implants"
+    }
+];
+
+let currentTestimonialIdx = 0;
+let testimonialTimer = null;
+
+function renderTestimonial(index) {
+    const textEl = document.getElementById('testimonial-text');
+    const authorBlock = document.getElementById('testimonial-author-block');
+    const initialsEl = document.getElementById('testimonial-initials');
+    const nameEl = document.getElementById('testimonial-name');
+    const subtitleEl = document.getElementById('testimonial-subtitle');
+    const dotsContainer = document.getElementById('testimonial-dots');
+    
+    if(!textEl || !dotsContainer) return;
+
+    // Fade out text blocks securely
+    textEl.style.opacity = '0';
+    authorBlock.style.opacity = '0';
+    
+    setTimeout(() => {
+        const data = testimonialsData[index];
+        textEl.textContent = data.text;
+        initialsEl.textContent = data.initials;
+        nameEl.textContent = data.name;
+        subtitleEl.textContent = data.subtitle;
+        
+        // Render exact dot layout
+        dotsContainer.innerHTML = testimonialsData.map((_, i) => {
+            if (i === index) {
+                return `<button class="w-8 h-2.5 rounded-full bg-[#0da27d] transition-all duration-300" aria-label="Slide ${i+1}"></button>`;
+            }
+            return `<button onclick="goToTestimonial(${i})" class="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-colors duration-300" aria-label="Slide ${i+1}"></button>`;
+        }).join('');
+
+        // Fade back in securely
+        textEl.style.opacity = '1';
+        authorBlock.style.opacity = '1';
+    }, 300);
+}
+
+window.goToTestimonial = function(index) {
+    currentTestimonialIdx = index;
+    renderTestimonial(currentTestimonialIdx);
+    resetTestimonialTimer();
+};
+
+function nextTestimonial() {
+    currentTestimonialIdx = (currentTestimonialIdx + 1) % testimonialsData.length;
+    renderTestimonial(currentTestimonialIdx);
+}
+
+function resetTestimonialTimer() {
+    clearInterval(testimonialTimer);
+    testimonialTimer = setInterval(nextTestimonial, 7000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if(document.getElementById('testimonial-text')) {
+        renderTestimonial(0);
+        resetTestimonialTimer();
+    }
+});

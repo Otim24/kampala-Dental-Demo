@@ -622,30 +622,26 @@
                         </div>
                         
                         <!-- Review Text -->
-                        <p class="text-white/90 text-xl font-[serif] md:text-[1.35rem] leading-relaxed mb-10 max-w-2xl">
+                        <p id="testimonial-text" class="text-white/90 text-xl font-[serif] md:text-[1.35rem] leading-relaxed mb-10 max-w-2xl min-h-[140px] transition-opacity duration-500">
                             The smile makeover at BrightSmile was absolutely worth every penny. Dr. Patel has an incredible eye for aesthetics and truly listened to what I wanted. Walking out with a brand new smile was one of the best feelings of my life.
                         </p>
                         
                         <!-- Author -->
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-[#0da27d]/15 text-[#0da27d] flex items-center justify-center font-bold text-sm shrink-0 border border-[#0da27d]/20">
+                        <div id="testimonial-author-block" class="flex items-center gap-4 transition-opacity duration-500">
+                            <div id="testimonial-initials" class="w-12 h-12 rounded-full bg-[#0da27d]/15 text-[#0da27d] flex items-center justify-center font-bold text-sm shrink-0 border border-[#0da27d]/20">
                                 RW
                             </div>
                             <div class="flex flex-col">
-                                <span class="font-bold text-[15px] text-white">Robert Williams</span>
-                                <span class="text-[#0da27d] text-[13px] font-medium tracking-wide">Full Smile Makeover</span>
+                                <span id="testimonial-name" class="font-bold text-[15px] text-white">Robert Williams</span>
+                                <span id="testimonial-subtitle" class="text-[#0da27d] text-[13px] font-medium tracking-wide">Full Smile Makeover</span>
                             </div>
                         </div>
                         
                     </div>
 
-                    <!-- Dots Navigation (Pure UI) -->
-                    <div class="flex justify-center gap-2 mt-8">
-                        <button class="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-colors" aria-label="Slide 1"></button>
-                        <button class="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-colors" aria-label="Slide 2"></button>
-                        <button class="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-colors" aria-label="Slide 3"></button>
-                        <!-- Active Dot -->
-                        <button class="w-8 h-2.5 rounded-full bg-[#0da27d] transition-all" aria-label="Slide 4"></button>
+                    <!-- Dots Navigation (Dynamic) -->
+                    <div id="testimonial-dots" class="flex justify-center gap-2 mt-8">
+                        <!-- Rendered by JS -->
                     </div>
                 </div>
 
