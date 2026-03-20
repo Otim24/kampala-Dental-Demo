@@ -602,52 +602,62 @@ let testimonialTimer = null;
 // ==========================================
 // Typewriter Effect Logic for Hero Section
 // ==========================================
-document.addEventListener('DOMContentLoaded', () => {
+function initTypewriter() {
     const typewriterElement = document.getElementById('typewriter-text');
-    if (typewriterElement) {
-        const words = ['Century', 'Excellence', 'Comfort'];
-        let wordIndex = 0;
-        let charIndex = 0; 
-        let isDeleting = false; 
+    if (!typewriterElement) return;
+    
+    // User requested typing MUST begin from "Starts"
+    const words = ['Starts at Century', 'Starts with Excellence', 'Starts with Comfort'];
+    let wordIndex = 0;
+    let charIndex = 0; 
+    let isDeleting = false; 
+    let timerId = null;
 
-        // Initial delay before first typing starts
-        setTimeout(type, 500);
+    function type() {
+        if (!document.getElementById('typewriter-text')) return;
+        const currentWord = words[wordIndex];
         
-        function type() {
-            const currentWord = words[wordIndex];
-            
-            if (isDeleting) {
-                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            // Smoother typing speeds
-            let typingSpeed = isDeleting ? 40 : 100;
-
-            // When full word is typed
-            if (!isDeleting && charIndex === currentWord.length) {
-                typingSpeed = 2500; // Pause at end of word for readability
-                isDeleting = true;
-            } 
-            // When word is fully deleted
-            else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                typingSpeed = 600; // Pause before typing new word
-            }
-
-            // Introduce slight randomness for human-like typing when moving forward
-            if (!isDeleting && charIndex !== currentWord.length) {
-                typingSpeed += Math.random() * 50;
-            }
-
-            setTimeout(type, typingSpeed);
+        if (isDeleting) {
+            typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
         }
+
+        // Smoother typing speeds
+        let typingSpeed = isDeleting ? 30 : 80;
+
+        // When full word is typed
+        if (!isDeleting && charIndex === currentWord.length) {
+            typingSpeed = 3000; // Pause at end of word for readability
+            isDeleting = true;
+        } 
+        // When word is fully deleted
+        else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            typingSpeed = 600; // Pause before typing new word
+        }
+
+        // Introduce slight randomness for human-like typing when moving forward
+        if (!isDeleting && charIndex !== currentWord.length) {
+            typingSpeed += Math.random() * 40;
+        }
+
+        timerId = setTimeout(type, typingSpeed);
     }
-});
+    
+    // Start effect shortly after load
+    setTimeout(type, 800);
+}
+
+// Ensure execution regardless of script load timing
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTypewriter);
+} else {
+    initTypewriter();
+}
 
 function renderTestimonial(index) {
     const textEl = document.getElementById('testimonial-text');
