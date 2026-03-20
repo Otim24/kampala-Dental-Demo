@@ -476,3 +476,92 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+// ============================================================
+// FAQ Logic
+// ============================================================
+const faqData = [
+    { category: 'general', q: 'How often should I visit the dentist?', a: 'We recommend visiting us every 6 months for a routine checkup and cleaning to maintain optimal oral health.' },
+    { category: 'general', q: 'Are you accepting new patients?', a: 'Yes! We are warmly welcoming new patients of all ages to our clinic. You can easily book your first consultation using our online appointment form.' },
+    { category: 'general', q: 'Do you treat children as well as adults?', a: 'Absolutely. We offer comprehensive pediatric dentistry services in a fun and welcoming environment tailored for younger patients.' },
+
+    { category: 'treatments', q: 'Does teeth whitening cause sensitivity?', a: 'Some mild sensitivity is normal but it usually subsides within 24-48 hours. We use protective gels and desensitizing agents to ensure your absolute comfort.' },
+    { category: 'treatments', q: 'How long do dental implants last?', a: 'With proper oral hygiene and regular checkups, the titanium posts of dental implants can last a lifetime, while the crown may need replacing after 10-15 years.' },
+    { category: 'treatments', q: 'What is the difference between an inlay, an onlay, and a crown?', a: 'Inlays and onlays repair partial tooth damage (like large cavities), seamlessly blending with your tooth. Crowns cover the entire visible portion of the tooth to protect a heavily weakened structure.' },
+
+    { category: 'costs', q: 'Do you accept my dental insurance?', a: 'We partner with most major dental insurance providers. We recommend contacting our front desk with your policy details before your visit so we can verify your coverage.' },
+    { category: 'costs', q: 'What payment methods do you accept?', a: 'We accept cash, major credit/debit cards, and all popular mobile money platforms for your convenience.' },
+    { category: 'costs', q: 'Do you offer flexible payment plans?', a: 'Yes! For more extensive procedures like implants or braces, we can arrange customized, staggered payment options so you can prioritize your health stress-free.' },
+
+    { category: 'appointments', q: 'How do I book an appointment?', a: 'You can quickly book online via our appointment form below, give us a direct call, or chat with us on WhatsApp for rapid scheduling.' },
+    { category: 'appointments', q: 'What should I bring to my first appointment?', a: 'Please bring a valid ID, any relevant medical history documents, previous dental x-rays (if available), and your insurance card if applicable.' },
+    { category: 'appointments', q: 'What is your cancellation policy?', a: 'We kindly request a 24-hour notice for any cancellations. This allows us to offer the crucial time slot to another patient who might be in urgent need.' },
+    { category: 'appointments', q: 'Do you offer emergency same-day appointments?', a: 'Yes, we always reserve dedicated slots each day specifically for dental emergencies such as severe pain, trauma, or unexpected swellings.' }
+];
+
+window.toggleFaq = function(button) {
+    const answer = button.nextElementSibling;
+    const icon = button.querySelector('.faq-icon');
+    const isExpanded = answer.classList.contains('max-h-[500px]');
+    
+    // Close all others first
+    document.querySelectorAll('.faq-answer').forEach(el => {
+        el.classList.remove('max-h-[500px]');
+        el.style.maxHeight = null;
+    });
+    document.querySelectorAll('.faq-icon').forEach(i => {
+        i.textContent = '+';
+        i.classList.remove('rotate-45');
+    });
+    
+    if (!isExpanded) {
+        answer.classList.add('max-h-[500px]');
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        icon.textContent = '+';
+        icon.classList.add('rotate-45');
+    }
+};
+
+window.renderFAQs = function(activeCategory) {
+    const container = document.getElementById('faq-container');
+    if(!container) return;
+    
+    const filteredQs = faqData.filter(faq => faq.category === activeCategory);
+    
+    container.innerHTML = filteredQs.map((faq, index) => `
+        <div class="bg-[#111111] dark:bg-black/40 border border-white/10 rounded-[1rem] overflow-hidden transition-all duration-300">
+            <button class="w-full flex items-center justify-between p-5 text-left focus:outline-none group" onclick="toggleFaq(this)">
+                <div class="flex items-center gap-4">
+                    <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/50 text-[12px] shrink-0 font-medium">${index + 1}</span>
+                    <h4 class="text-[15.5px] font-medium text-white group-hover:text-[#00e5a3] transition-colors pr-4">${faq.q}</h4>
+                </div>
+                <span class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/50 text-[18px] shrink-0 faq-icon transition-transform duration-300">+</span>
+            </button>
+            <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                <p class="text-white/60 font-light text-[14.5px] leading-relaxed pb-5 pl-[3.25rem]">${faq.a}</p>
+            </div>
+        </div>
+    `).join('');
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.faq-tab');
+    if(tabs.length > 0) {
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
+                    t.classList.add('bg-white/5', 'text-white');
+                });
+                
+                tab.classList.remove('bg-white/5', 'text-white');
+                tab.classList.add('active', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
+                
+                const category = tab.getAttribute('data-category');
+                window.renderFAQs(category);
+            });
+        });
+        // Initial render for active tab
+        window.renderFAQs('appointments');
+    }
+});
