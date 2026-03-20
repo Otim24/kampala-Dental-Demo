@@ -529,16 +529,16 @@ window.renderFAQs = function(activeCategory) {
     const filteredQs = faqData.filter(faq => faq.category === activeCategory);
     
     container.innerHTML = filteredQs.map((faq, index) => `
-        <div class="bg-[#111111] dark:bg-black/40 border border-white/10 rounded-[1rem] overflow-hidden transition-all duration-300">
+        <div class="bg-white dark:bg-black/40 border border-gray-100 dark:border-white/10 rounded-[1rem] overflow-hidden transition-all duration-300 shadow-sm dark:shadow-none">
             <button class="w-full flex items-center justify-between p-5 text-left focus:outline-none group" onclick="toggleFaq(this)">
                 <div class="flex items-center gap-4">
-                    <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/50 text-[12px] shrink-0 font-medium">${index + 1}</span>
-                    <h4 class="text-[15.5px] font-medium text-white group-hover:text-[#00e5a3] transition-colors pr-4">${faq.q}</h4>
+                    <span class="w-7 h-7 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-500 dark:text-white/50 text-[12px] shrink-0 font-medium">${index + 1}</span>
+                    <h4 class="text-[15.5px] font-medium text-gray-800 dark:text-white group-hover:text-green-600 dark:group-hover:text-[#00e5a3] transition-colors pr-4">${faq.q}</h4>
                 </div>
-                <span class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/50 text-[18px] shrink-0 faq-icon transition-transform duration-300">+</span>
+                <span class="w-7 h-7 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 dark:text-white/50 text-[18px] shrink-0 faq-icon transition-transform duration-300">+</span>
             </button>
             <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
-                <p class="text-white/60 font-light text-[14.5px] leading-relaxed pb-5 pl-[3.25rem]">${faq.a}</p>
+                <p class="text-gray-600 dark:text-white/60 font-light text-[14.5px] leading-relaxed pb-5 pl-[3.25rem]">${faq.a}</p>
             </div>
         </div>
     `).join('');
@@ -550,12 +550,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 tabs.forEach(t => {
-                    t.classList.remove('active', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
-                    t.classList.add('bg-white/5', 'text-white');
+                    t.classList.remove('active', 'shadow-sm', 'dark:shadow-none', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
+                    t.classList.add('bg-white', 'dark:bg-white/5', 'text-gray-700', 'dark:text-white');
                 });
                 
-                tab.classList.remove('bg-white/5', 'text-white');
-                tab.classList.add('active', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
+                tab.classList.remove('bg-white', 'dark:bg-white/5', 'text-gray-700', 'dark:text-white');
+                tab.classList.add('active', 'shadow-sm', 'dark:shadow-none', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
                 
                 const category = tab.getAttribute('data-category');
                 window.renderFAQs(category);
