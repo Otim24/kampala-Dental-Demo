@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Floating WhatsApp Button Logic
     const whatsappFab = document.getElementById('whatsapp-fab');
     const heroSection = document.getElementById('home');
-    const footerSection = document.getElementById('contact');
+    const footerSection = document.querySelector('footer');
 
     if (whatsappFab && heroSection && footerSection) {
         // Status trackers for section visibility
