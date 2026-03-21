@@ -7,7 +7,7 @@
 // - %20 = space, %2C = comma in URL encoding.
 // ============================================================
 window.openWhatsAppBooking = function() {
-    window.open('https://wa.me/256700000000?text=Hello%20LifePath%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
+    window.open('https://wa.me/256702079576?text=Hello%20Century%20Dental%20Care%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -237,7 +237,50 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateTime, 60000);
     }
 
-    // --- Stat Counter Animation Logic ---
+    // --- Hero Stat Counter Animation Logic ---
+    const heroStatCounters = document.querySelectorAll('.hero-stat-counter');
+    if (heroStatCounters.length > 0) {
+        const duration = 2000; // 2 seconds
+        const framesPerSecond = 60;
+        const totalFrames = Math.round((duration / 1000) * framesPerSecond);
+
+        const heroStatObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const targetValue = parseInt(counter.getAttribute('data-target'), 10);
+                    let currentFrame = 0;
+                    const increment = targetValue / totalFrames;
+
+                    const animateCounter = () => {
+                        currentFrame++;
+                        const currentValue = Math.round(increment * currentFrame);
+                        
+                        if (currentFrame <= totalFrames) {
+                            // Format with commas if >= 1000
+                            counter.textContent = currentValue >= 1000 ? currentValue.toLocaleString() : currentValue;
+                            requestAnimationFrame(animateCounter);
+                        } else {
+                            counter.textContent = targetValue >= 1000 ? targetValue.toLocaleString() : targetValue; 
+                        }
+                    };
+
+                    requestAnimationFrame(animateCounter);
+                    observer.unobserve(counter);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+
+        heroStatCounters.forEach(counter => {
+            heroStatObserver.observe(counter);
+        });
+    }
+
+    // --- Stat Counter Animation Logic (Other) ---
     const statCounter = document.getElementById('stat-counter');
     if (statCounter) {
         const duration = 1500; // 1.5 seconds
