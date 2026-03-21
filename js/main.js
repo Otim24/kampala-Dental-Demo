@@ -13,6 +13,12 @@ window.openWhatsAppBooking = function() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Dental Clinic site initialized.");
 
+    // --- Force Scroll to Top on Refresh ---
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     // --- Splash Screen Logic ---
     const splashScreen = document.getElementById('splash-screen');
     if (splashScreen) {
@@ -71,6 +77,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Select all elements with the 'reveal-on-scroll' class
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
     revealElements.forEach(el => observer.observe(el));
+
+    // --- Back to Top Button Logic ---
+    const backToTopBtn = document.getElementById('back-to-top');
+    const footerElement = document.querySelector('footer');
+
+    if (backToTopBtn && footerElement) {
+        // Scroll to top on click
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Observer to show button ONLY when footer is visible
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+                    backToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                    backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        footerObserver.observe(footerElement);
+    }
 
     // Mobile Menu Toggle Logic
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
