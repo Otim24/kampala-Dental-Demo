@@ -3,11 +3,11 @@
 // ============================================================
 // 🔧 CUSTOMISE FOR NEW CLIENT: WhatsApp Booking
 // - Change the phone number (256700000000) to the client's WhatsApp number (country code + number, no + sign).
-// - Update the pre-filled message text (Hello%20LifePath...) to use the client's clinic name.
+// - Update the pre-filled message text (Hello%20Axeon%20Dental...) to use the client's clinic name.
 // - %20 = space, %2C = comma in URL encoding.
 // ============================================================
 window.openWhatsAppBooking = function() {
-    window.open('https://wa.me/256700000000?text=Hello%20LifePath%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
+    window.open('https://wa.me/256700000000?text=Hello%20Axeon%20Dental%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
 };
 
 document.addEventListener('DOMContentLoaded', () => {
