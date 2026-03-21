@@ -212,9 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const fabObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.target.id === 'home') {
+                if (entry.target === heroSection) {
                     isHeroVisible = entry.isIntersecting;
-                } else if (entry.target.id === 'contact') {
+                } else if (entry.target === footerSection) {
                     isFooterVisible = entry.isIntersecting;
                 }
             });
