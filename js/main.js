@@ -7,7 +7,7 @@
 // - %20 = space, %2C = comma in URL encoding.
 // ============================================================
 window.openWhatsAppBooking = function() {
-    window.open('https://wa.me/256702079576?text=Hello%20Century%20Dental%20Care%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
+    window.open('https://wa.me/256700000000?text=Hello%20LifePath%2C%20I%20would%20like%20to%20book%20an%20appointment.', '_blank');
 };
 
 document.addEventListener('DOMContentLoaded', () => {
