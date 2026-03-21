@@ -13,6 +13,27 @@ window.openWhatsAppBooking = function() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Dental Clinic site initialized.");
 
+    // --- Dynamic Opening Hours ---
+    const currentDay = new Date().getDay(); // 0: Sun, 1: Mon, ... 6: Sat
+    const hoursRows = document.querySelectorAll('.hours-row');
+    
+    hoursRows.forEach(row => {
+        const rowDay = parseInt(row.getAttribute('data-day'));
+        const todayBadge = row.querySelector('.today-badge');
+        const timeSpan = row.querySelector('.time-span');
+        
+        if (rowDay === currentDay) {
+            // Apply Active Styles
+            row.classList.remove('hover:bg-white', 'dark:hover:bg-neutral-800', 'hover:shadow-sm', 'text-gray-700', 'dark:text-neutral-300', 'font-medium', 'border-transparent');
+            row.classList.add('bg-[#e6f7f2]', 'dark:bg-[#0da27d]/10', 'border-[#0da27d]/20', 'text-[#0da27d]', 'font-bold');
+            
+            todayBadge.classList.remove('hidden');
+            
+            timeSpan.classList.remove('text-gray-500', 'dark:text-neutral-400');
+            timeSpan.classList.add('text-[#0da27d]/80');
+        }
+    });
+
     // --- Force Scroll to Top on Refresh ---
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';

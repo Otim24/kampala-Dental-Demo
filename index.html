@@ -1034,42 +1034,60 @@
                     
                     <div class="flex flex-col gap-4 mb-8">
                         <!-- Monday -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent">
-                            <span>Monday</span>
-                            <span class="text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="1">
+                            <div class="flex items-center gap-2">
+                                <span class="day-name">Monday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                            </div>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
                         </div>
                         <!-- Tuesday -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent">
-                            <span>Tuesday</span>
-                            <span class="text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="2">
+                            <div class="flex items-center gap-2">
+                                <span class="day-name">Tuesday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                            </div>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
                         </div>
                         <!-- Wednesday -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent">
-                            <span>Wednesday</span>
-                            <span class="text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="3">
+                            <div class="flex items-center gap-2">
+                                <span class="day-name">Wednesday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                            </div>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
                         </div>
                         <!-- Thursday -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent">
-                            <span>Thursday</span>
-                            <span class="text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
-                        </div>
-                        <!-- Friday (Active) -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl bg-[#e6f7f2] dark:bg-[#0da27d]/10 border border-[#0da27d]/20 transition-all text-[14px] text-[#0da27d] font-bold">
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="4">
                             <div class="flex items-center gap-2">
-                                <span>Friday</span>
-                                <span class="bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                                <span class="day-name">Thursday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
                             </div>
-                            <span class="text-[#0da27d]/80 text-[13px]">7:30 AM - 10:30 PM</span>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
+                        </div>
+                        <!-- Friday -->
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="5">
+                            <div class="flex items-center gap-2">
+                                <span class="day-name">Friday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                            </div>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
                         </div>
                         <!-- Saturday -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent">
-                            <span>Saturday</span>
-                            <span class="text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="6">
+                            <div class="flex items-center gap-2">
+                                <span class="day-name">Saturday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                            </div>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
                         </div>
                         <!-- Sunday -->
-                        <div class="flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent">
-                            <span>Sunday</span>
-                            <span class="text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
+                        <div class="hours-row flex justify-between items-center px-4 py-3 rounded-xl hover:bg-white dark:hover:bg-neutral-800 hover:shadow-sm transition-all text-[14px] text-gray-700 dark:text-neutral-300 font-medium border border-transparent" data-day="0">
+                            <div class="flex items-center gap-2">
+                                <span class="day-name">Sunday</span>
+                                <span class="today-badge hidden bg-[#0da27d] text-white text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full">Today</span>
+                            </div>
+                            <span class="time-span text-gray-500 dark:text-neutral-400 text-[13px]">7:30 AM - 10:30 PM</span>
                         </div>
                     </div>
 
