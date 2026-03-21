@@ -66,6 +66,48 @@
 
 <body class="bg-[#FCFBF8] text-gray-900 dark:bg-neutral-900 dark:text-neutral-100 font-serif antialiased overflow-x-hidden selection:bg-black selection:text-white transition-colors duration-500">
 
+    <!-- Splash Screen -->
+    <style>
+        .tooth-draw-path {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawPath 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .sparkle-anim {
+            animation: popSparkle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 1.1s;
+        }
+        @keyframes drawPath {
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes popSparkle {
+            0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes fadeInSplash {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-[#FCFBF8] dark:bg-neutral-900 flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out pointer-events-auto">
+        <div class="relative flex items-center justify-center w-24 h-24 mb-3">
+            <!-- SVG Tooth outline drawing -->
+            <svg class="w-14 h-14 text-[#0da27d] relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path class="tooth-draw-path" pathLength="100" stroke-linecap="round" stroke-linejoin="round"
+                    d="M8 3c-2.21 0-4 1.79-4 4 0 2 1.5 5 3.5 8l1.5 2v3a2 2 0 0 0 4 0v-2h2v2a2 2 0 0 0 4 0v-3l1.5-2c2-3 3.5-6 3.5-8 0-2.21-1.79-4-4-4-1.5 0-2.8 1-3.5 2.2C10.8 4 9.5 3 8 3z" />
+            </svg>
+            
+            <!-- Sparkle -->
+            <svg class="absolute -top-1 right-2 w-6 h-6 text-[#0da27d] opacity-0 sparkle-anim scale-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z" />
+            </svg>
+        </div>
+        <div class="text-[#0da27d] font-serif font-bold tracking-[0.2em] text-[1.1rem] uppercase opacity-0 animate-[fadeInSplash_0.8s_ease-out_1.3s_forwards]">
+            LifePath
+        </div>
+    </div>
+
     <!-- Header -->
     <header id="site-header"
         class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center left-0 right-0 max-w-[1400px] mx-auto transition-all duration-300">

@@ -12,6 +12,28 @@ window.openWhatsAppBooking = function() {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Dental Clinic site initialized.");
+
+    // --- Splash Screen Logic ---
+    const splashScreen = document.getElementById('splash-screen');
+    if (splashScreen) {
+        // Prevent scrolling while splash is active
+        document.body.style.overflow = 'hidden';
+        
+        // Wait for animation + a small buffer (2.5s total)
+        setTimeout(() => {
+            splashScreen.classList.add('opacity-0');
+            splashScreen.classList.remove('pointer-events-auto');
+            splashScreen.classList.add('pointer-events-none');
+            
+            // Allow scrolling again
+            document.body.style.overflow = '';
+            
+            // Remove completely from DOM after fade transition (1s)
+            setTimeout(() => {
+                splashScreen.remove();
+            }, 1000);
+        }, 2500);
+    }
     
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
