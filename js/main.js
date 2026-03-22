@@ -676,11 +676,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 tab.classList.add('active', 'shadow-sm', 'dark:shadow-none', 'bg-[#00e5a3]', 'text-[#0A0A0A]');
                 
                 const category = tab.getAttribute('data-category');
-                window.renderFAQs(category);
+                
+                const container = document.getElementById('faq-container');
+                if (container) {
+                    container.style.opacity = '0';
+                    setTimeout(() => {
+                        window.renderFAQs(category);
+                        container.style.opacity = '1';
+                    }, 250);
+                } else {
+                    window.renderFAQs(category);
+                }
             });
         });
         // Initial render for active tab
-        window.renderFAQs('appointments');
+        window.renderFAQs('general');
     }
 });
 
