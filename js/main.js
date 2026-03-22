@@ -724,7 +724,7 @@ function initTypewriter() {
     const typewriterElement = document.getElementById('typewriter-text');
     if (!typewriterElement) return;
     
-    const textToType = "Starts at Century";
+    const textToType = "Starts at Axeon";
     let charIndex = 0; 
     let timerId = null;
 
